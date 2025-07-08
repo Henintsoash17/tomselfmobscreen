@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import '../widgets/add_absence_modal.dart';
@@ -198,13 +198,14 @@ class _AbsenceScreenState extends State<AbsenceScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddAbsenceModal,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.red,
+        shape: CircleBorder(),
         child: Icon(
           Icons.add,
           color: Colors.white,
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

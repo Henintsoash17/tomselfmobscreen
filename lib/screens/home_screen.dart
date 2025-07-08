@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'absence_screen.dart';
+import 'bulletin_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -59,12 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: Drawer(
+        width: MediaQuery.of(context).size.width * 0.6,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 255, 255, 255),
+                color: const Color.fromARGB(255, 254, 255, 255),
               ),
               child: Text(
                 'Menu',
@@ -132,8 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Bulletin de salaire',
                     icon: Icons.receipt_long,
                     onTap: () {
-                      print('Navigation vers Bulletin de salaire');
-                      // Navigator.pushNamed(context, '/bulletin');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BulletinScreen()),
+                      );
                     },
                   ),
                   _buildMenuButton(
