@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
+// ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import '../widgets/add_frais_medicaux_modal.dart';
@@ -23,9 +23,9 @@ class _FraisMedicauxScreenState extends State<FraisMedicauxScreen> {
       'typeTraitement': 'Consultation',
       'observation': 'Consultation de routine',
       'status': 'validé',
-      'montantFacture': 25000.00,
-      'montantDemande': 15000.00,
-      'montantRembourse': 15000.00,
+      'montantFacture': 25.0,
+      'montantDemande': 25.0,
+      'montantRembourse': 17.5,
       'commentaire': 'Consultation générale pour contrôle de santé annuel',
     },
     {
@@ -37,9 +37,9 @@ class _FraisMedicauxScreenState extends State<FraisMedicauxScreen> {
       'typeTraitement': 'Imagerie',
       'observation': 'Contrôle pulmonaire',
       'status': 'attente',
-      'montantFacture': 45000.00,
-      'montantDemande': 45000.00,
-      'montantRembourse': 31500.00,
+      'montantFacture': 45.0,
+      'montantDemande': 45.0,
+      'montantRembourse': 0.0,
       'commentaire': 'Radiographie prescrite suite à toux persistante',
     },
     {
@@ -50,11 +50,11 @@ class _FraisMedicauxScreenState extends State<FraisMedicauxScreen> {
       'medecin': 'Dr. Leroy',
       'typeTraitement': 'Dentaire',
       'observation': 'Détartrage et soins',
-      'status': 'validé',
-      'montantFacture': 8000.00,
-      'montantDemande': 8000.00,
-      'montantRembourse': 5600.00,
-      'commentaire': 'Soins dentaires de routine avec détartrage',
+      'status': 'refusé',
+      'montantFacture': 80.0,
+      'montantDemande': 80.0,
+      'montantRembourse': 0.0,
+      'commentaire': 'Soins dentaires non couverts par la mutuelle',
     },
     {
       'id': 4,
@@ -64,11 +64,11 @@ class _FraisMedicauxScreenState extends State<FraisMedicauxScreen> {
       'medecin': 'Laboratoire Central',
       'typeTraitement': 'Analyse',
       'observation': 'Bilan sanguin complet',
-      'status': 'attente',
-      'montantFacture': 35000.00,
-      'montantDemande': 35000.00,
-      'montantRembourse': 24500.00,
-      'commentaire': 'Bilan sanguin prescrit pour suivi médical',
+      'status': 'à justifier',
+      'montantFacture': 35.0,
+      'montantDemande': 35.0,
+      'montantRembourse': 0.0,
+      'commentaire': 'Bilan sanguin prescrit pour suivi médical - Documents manquants',
     },
     {
       'id': 5,
@@ -79,10 +79,24 @@ class _FraisMedicauxScreenState extends State<FraisMedicauxScreen> {
       'typeTraitement': 'Rééducation',
       'observation': 'Séances de rééducation',
       'status': 'validé',
-      'montantFacture': 12000.00,
-      'montantDemande': 12000.00,
-      'montantRembourse': 8400.00,
+      'montantFacture': 120.0,
+      'montantDemande': 120.0,
+      'montantRembourse': 84.0,
       'commentaire': 'Séances de kinésithérapie pour rééducation du dos',
+    },
+    {
+      'id': 6,
+      'nom': 'Alice Moreau',
+      'libelle': 'Consultation spécialiste',
+      'refFacture': 'FAC-2024-006',
+      'medecin': 'Dr. Rousseau',
+      'typeTraitement': 'Consultation',
+      'observation': 'Consultation cardiologique',
+      'status': 'à justifier',
+      'montantFacture': 60.0,
+      'montantDemande': 60.0,
+      'montantRembourse': 0.0,
+      'commentaire': 'Consultation spécialisée - Prescription médicale requise',
     },
   ];
 
@@ -92,6 +106,10 @@ class _FraisMedicauxScreenState extends State<FraisMedicauxScreen> {
         return Colors.green;
       case 'attente':
         return Colors.orange;
+      case 'refusé':
+        return Colors.red;
+      case 'à justifier':
+        return Colors.purple;
       default:
         return Colors.grey;
     }

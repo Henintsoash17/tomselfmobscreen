@@ -13,6 +13,10 @@ class FraisMedicauxDetailScreen extends StatelessWidget {
         return Colors.green;
       case 'attente':
         return Colors.orange;
+      case 'refusé':
+        return Colors.red;
+      case 'à justifier':
+        return Colors.purple;
       default:
         return Colors.grey;
     }
@@ -127,7 +131,7 @@ class FraisMedicauxDetailScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 16),
                       _buildDetailRow('Type de traitement', frais['typeTraitement']),
-                      _buildDetailRow('Montant facturé', '${frais['montantFacture'].toStringAsFixed(2)} '),
+                      _buildDetailRow('Montant facturé', '${frais['montantFacture'].toStringAsFixed(2)} €'),
                       _buildDetailRow('Montant demandé', '${frais['montantDemande'].toStringAsFixed(2)} '),
                       _buildDetailRow('Montant remboursé', '${frais['montantRembourse'].toStringAsFixed(2)}'),
                     ],
