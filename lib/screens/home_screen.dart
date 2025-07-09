@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'absence_screen.dart';
 import 'bulletin_screen.dart';
 import 'frais_medicaux_screen.dart';
+import 'note_frais_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,15 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Image.asset(
               'assets/logo/tomate_logo_dark.png',
               fit: BoxFit.contain,
-              errorBuilder: (context, error, stackTrace) {
-                return Text(
-                  'LOGO',
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-                );
-              },
             ),
           ),
         ),
@@ -124,39 +116,39 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildMenuButton(
                     title: 'Absences',
                     icon: Icons.event_busy,
-                    onTap: () {
+                    onTap: () =>
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => AbsenceScreen()),
-                      );
-                    },
+                      ),
                   ),
                   _buildMenuButton(
                     title: 'Bulletin de salaire',
                     icon: Icons.receipt_long,
-                    onTap: () {
+                    onTap: () =>
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => BulletinScreen()),
-                      );
-                    },
+                      ),
+
                   ),
                   _buildMenuButton(
                     title: 'Frais médicaux',
                     icon: Icons.medical_services,
-                    onTap: () {
+                    onTap: () =>
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => FraisMedicauxScreen()),
-                      );
-                    },
+                      ),
                   ),
                   _buildMenuButton(
                     title: 'Note de frais',
                     icon: Icons.note_alt,
                     onTap: () {
-                      print('Navigation vers Note de frais');
-                      // Navigator.pushNamed(context, '/note-frais');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NoteFraisScreen()),
+                      );
                     },
                   ),
                 ],
