@@ -401,7 +401,7 @@ class _TraitementDialogState extends State<_TraitementDialog> {
               TextFormField(
                 controller: _montantFactureController,
                 decoration: InputDecoration(
-                  labelText: 'Montant facturé (€)',
+                  labelText: 'Montant facturé ',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -421,7 +421,7 @@ class _TraitementDialogState extends State<_TraitementDialog> {
               TextFormField(
                 controller: _montantDemandeController,
                 decoration: InputDecoration(
-                  labelText: 'Montant demandé (€)',
+                  labelText: 'Montant demandé ',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -440,7 +440,7 @@ class _TraitementDialogState extends State<_TraitementDialog> {
               TextFormField(
                 controller: _montantRembourseController,
                 decoration: InputDecoration(
-                  labelText: 'Montant remboursé (€)',
+                  labelText: 'Montant remboursé ',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
