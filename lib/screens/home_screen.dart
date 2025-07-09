@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'absence_screen.dart';
 import 'bulletin_screen.dart';
+import 'frais_medicaux_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -144,8 +145,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Frais médicaux',
                     icon: Icons.medical_services,
                     onTap: () {
-                      print('Navigation vers Frais médicaux');
-                      // Navigator.pushNamed(context, '/frais-medicaux');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FraisMedicauxScreen()),
+                      );
                     },
                   ),
                   _buildMenuButton(

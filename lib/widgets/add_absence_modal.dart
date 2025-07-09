@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class AddAbsenceModal extends StatefulWidget {
+  const AddAbsenceModal({super.key});
+
   @override
   _AddAbsenceModalState createState() => _AddAbsenceModalState();
 }
