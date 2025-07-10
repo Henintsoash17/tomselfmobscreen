@@ -1,229 +1,198 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print, deprecated_member_use
+// ignore_for_file: library_private_types_in_public_api, avoid_print, deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'absence_screen.dart';
-import 'bulletin_screen.dart';
-import 'frais_medicaux_screen.dart';
-import 'note_frais_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth_provider.dart';
+import '../services/http_service.dart';
+import '../config/api_config.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    
-    if (index == 1) {
-      // Navigation vers le profil
-      // Navigator.pushNamed(context, '/profile');
-      print('Navigation vers Profile');
-    }
-  }
+  final HttpService _httpService = HttpService();
+  String _apiStatus = 'Non testé';
+  bool _isTestingApi = false;
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 2,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: Icon(Icons.menu, color: Colors.black87),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: Center(
-          child: SizedBox(
-            height: 48,
-            child: Image.asset(
-              'assets/logo/tomate_logo_dark.png',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
+        title: const Text('Accueil'),
+        backgroundColor: Colors.blue,
         actions: [
-          SizedBox(width: 48),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => _logout(context),
+          ),
         ],
       ),
-      drawer: Drawer(
-        width: MediaQuery.of(context).size.width * 0.6,
-        child: ListView(
-          padding: EdgeInsets.zero,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 254, 255, 255),
-              ),
-              child: Text(
-                'Menu',
-                style: TextStyle(
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 24,
+            // Informations utilisateur
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Utilisateur connecté:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text('Nom: ${authProvider.user?['name'] ?? 'N/A'}'),
+                    Text('Email: ${authProvider.user?['email'] ?? 'N/A'}'),
+                  ],
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Accueil'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Paramètres'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Déconnexion'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(height: 20),
-            Text(
-              'Bonjour',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+            
+            const SizedBox(height: 16),
+            
+            // Informations de connexion API
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Configuration API:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text('URL: ${ApiConfig.baseUrl}'),
+                    Text('Status: $_apiStatus'),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: _isTestingApi ? null : _testApiConnection,
+                      child: _isTestingApi
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Text('Tester la connexion API'),
+                    ),
+                  ],
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
-            SizedBox(height: 30),
+            
+            const SizedBox(height: 16),
+            
+            // Boutons d'action
             Expanded(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildMenuButton(
-                    title: 'Absences',
-                    icon: Icons.event_busy,
-                    onTap: () =>
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AbsenceScreen()),
-                      ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => _fetchUserProfile(),
+                      child: const Text('Récupérer le profil'),
+                    ),
                   ),
-                  _buildMenuButton(
-                    title: 'Bulletin de salaire',
-                    icon: Icons.receipt_long,
-                    onTap: () =>
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => BulletinScreen()),
-                      ),
-
-                  ),
-                  _buildMenuButton(
-                    title: 'Frais médicaux',
-                    icon: Icons.medical_services,
-                    onTap: () =>
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FraisMedicauxScreen()),
-                      ),
-                  ),
-                  _buildMenuButton(
-                    title: 'Note de frais',
-                    icon: Icons.note_alt,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => NoteFraisScreen()),
-                      );
-                    },
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => _fetchUsers(),
+                      child: const Text('Lister les utilisateurs'),
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Accueil',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
       ),
     );
   }
 
-  Widget _buildMenuButton({
-    required String title,
-    required IconData icon,
-    required VoidCallback onTap,
-  }) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
-        child: Container(
-          width: double.infinity,
-          height: 70,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
+  Future<void> _testApiConnection() async {
+    setState(() {
+      _isTestingApi = true;
+      _apiStatus = 'Test en cours...';
+    });
+
+    try {
+      final _ = await _httpService.get('/api/health');
+      setState(() {
+        _apiStatus = 'Connecté ✅';
+      });
+    } catch (e) {
+      setState(() {
+        _apiStatus = 'Erreur: $e ❌';
+      });
+    } finally {
+      setState(() {
+        _isTestingApi = false;
+      });
+    }
+  }
+
+  Future<void> _fetchUserProfile() async {
+    try {
+      final response = await _httpService.get('/api/user/profile');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Profil récupéré: ${response.body}'),
+            backgroundColor: Colors.green,
           ),
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 24,
-                color: Colors.black54,
-              ),
-              SizedBox(width: 20),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.black26,
-                size: 16,
-              ),
-            ],
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur: $e'),
+            backgroundColor: Colors.red,
           ),
-        ),
-      ),
-    );
+        );
+      }
+    }
+  }
+
+  Future<void> _fetchUsers() async {
+    try {
+      final response = await _httpService.get('/api/users');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Utilisateurs récupérés: ${response.body}'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _logout(BuildContext context) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider.logout();
+    
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed('/login');
+    }
   }
 }
