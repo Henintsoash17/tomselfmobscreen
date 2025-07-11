@@ -22,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Connexion'),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.red,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
