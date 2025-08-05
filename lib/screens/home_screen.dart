@@ -116,30 +116,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildMenuButton(
                     title: 'Absences',
                     icon: Icons.event_busy,
-                    onTap: () =>
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => AbsenceScreen()),
-                      ),
+                      );
+                    },
                   ),
                   _buildMenuButton(
                     title: 'Bulletin de salaire',
                     icon: Icons.receipt_long,
-                    onTap: () =>
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => BulletinScreen()),
-                      ),
-
+                      );
+                    },
                   ),
                   _buildMenuButton(
                     title: 'Frais médicaux',
                     icon: Icons.medical_services,
-                    onTap: () =>
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => FraisMedicauxScreen()),
-                      ),
+                      );
+                    },
                   ),
                   _buildMenuButton(
                     title: 'Note de frais',
