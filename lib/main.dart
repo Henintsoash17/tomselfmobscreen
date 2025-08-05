@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         home: const AuthWrapper(),
         routes: {
-          '/login': (context) => const LoginScreen(),
+          //'/login': (context) => const LoginScreen(),
           '/home': (context) => const HomeScreen(),
         },
       ),
@@ -46,8 +46,8 @@ class AuthWrapper extends StatelessWidget {
         }
         
         return authProvider.isAuthenticated 
-            ? const HomeScreen() 
-            : const LoginScreen();
+            ? const HomeScreen()
+            : const HomeScreen();
       },
     );
   }

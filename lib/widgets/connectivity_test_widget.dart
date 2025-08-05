@@ -61,7 +61,7 @@ class _ConnectivityTestWidgetState extends State<ConnectivityTestWidget> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: Text(
-                                  '${entry.key}',
+                                  entry.key,
                                   style: TextStyle(
                                     color: isAccessible ? Colors.green : Colors.red,
                                     fontWeight: FontWeight.bold,
@@ -88,7 +88,7 @@ class _ConnectivityTestWidgetState extends State<ConnectivityTestWidget> {
                         ],
                       ),
                     );
-                  }).toList(),
+                  }),
                 ],
               ],
             ),

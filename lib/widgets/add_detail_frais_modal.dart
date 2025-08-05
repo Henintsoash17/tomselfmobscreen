@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 
 class AddDetailFraisModal extends StatefulWidget {
+  const AddDetailFraisModal({super.key});
+
   @override
   _AddDetailFraisModalState createState() => _AddDetailFraisModalState();
 }

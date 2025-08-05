@@ -13,7 +13,7 @@ class AuthService {
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
-      final response = await _httpService.post('/api/auth/self', body: {
+      final response = await _httpService.post('/api/tomself/sessionself/SigninSelf', body: {
         'email': email,
         'password': password,
       });
